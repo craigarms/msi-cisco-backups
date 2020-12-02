@@ -1,0 +1,51 @@
+# BEGIN ANSIBLE MANAGED BLOCK vlans
+VLAN Name                             Status    Ports
+---- -------------------------------- --------- -------------------------------
+1    default                          active    Et1/2, Et1/3, Et2/1, Et2/2, Et2/3, Et3/0, Et3/1, Et3/2, Et3/3
+10   USER                             active    
+20   PRINTERS                         active    
+40   SERVERS                          active    
+50   DMZ                              active    
+100  Interco-Pod-1                    active    
+200  Interco-FW                       active    
+1002 fddi-default                     act/unsup 
+1003 token-ring-default               act/unsup 
+1004 fddinet-default                  act/unsup 
+1005 trnet-default                    act/unsup 
+
+VLAN Type  SAID       MTU   Parent RingNo BridgeNo Stp  BrdgMode Trans1 Trans2
+---- ----- ---------- ----- ------ ------ -------- ---- -------- ------ ------
+1    enet  100001     1500  -      -      -        -    -        0      0   
+10   enet  100010     1500  -      -      -        -    -        0      0   
+20   enet  100020     1500  -      -      -        -    -        0      0   
+40   enet  100040     1500  -      -      -        -    -        0      0   
+50   enet  100050     1500  -      -      -        -    -        0      0   
+100  enet  100100     1500  -      -      -        -    -        0      0   
+200  enet  100200     1500  -      -      -        -    -        0      0   
+1002 fddi  101002     1500  -      -      -        -    -        0      0   
+1003 tr    101003     1500  -      -      -        -    -        0      0   
+1004 fdnet 101004     1500  -      -      -        ieee -        0      0   
+1005 trnet 101005     1500  -      -      -        ibm  -        0      0   
+
+Primary Secondary Type              Ports
+------- --------- ----------------- ------------------------------------------
+# END ANSIBLE MANAGED BLOCK vlans
+# BEGIN ANSIBLE MANAGED BLOCK vtp
+VTP Version capable             : 1 to 3
+VTP version running             : 1
+VTP Domain Name                 : MSI
+VTP Pruning Mode                : Disabled
+VTP Traps Generation            : Disabled
+Device ID                       : aabb.cc00.0300
+Configuration last modified by 192.168.10.252 at 12-1-20 10:58:06
+Local updater ID is 192.168.10.252 on interface Vl10 (lowest numbered VLAN interface found)
+
+Feature VLAN:
+--------------
+VTP Operating Mode                : Server
+Maximum VLANs supported locally   : 1005
+Number of existing VLANs          : 11
+Configuration Revision            : 6
+MD5 digest                        : 0xF2 0x02 0xD8 0x95 0xB7 0xEC 0x77 0x7C 
+                                    0x7D 0x88 0xB3 0x88 0x60 0x9E 0x21 0x4F
+# END ANSIBLE MANAGED BLOCK vtp
