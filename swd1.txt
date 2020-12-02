@@ -7,6 +7,11 @@ VLAN Name                             Status    Ports
 40   SERVERS                          active    
 50   DMZ                              active    
 100  Interco-Pod-1                    active    
+101  VLAN0101                         active    
+102  VLAN0102                         active    
+103  VLAN0103                         active    
+104  VLAN0104                         active    
+105  VLAN0105                         active    
 200  Interco-FW                       active    
 1002 fddi-default                     act/unsup 
 1003 token-ring-default               act/unsup 
@@ -21,6 +26,11 @@ VLAN Type  SAID       MTU   Parent RingNo BridgeNo Stp  BrdgMode Trans1 Trans2
 40   enet  100040     1500  -      -      -        -    -        0      0   
 50   enet  100050     1500  -      -      -        -    -        0      0   
 100  enet  100100     1500  -      -      -        -    -        0      0   
+101  enet  100101     1500  -      -      -        -    -        0      0   
+102  enet  100102     1500  -      -      -        -    -        0      0   
+103  enet  100103     1500  -      -      -        -    -        0      0   
+104  enet  100104     1500  -      -      -        -    -        0      0   
+105  enet  100105     1500  -      -      -        -    -        0      0   
 200  enet  100200     1500  -      -      -        -    -        0      0   
 1002 fddi  101002     1500  -      -      -        -    -        0      0   
 1003 tr    101003     1500  -      -      -        -    -        0      0   
@@ -37,15 +47,15 @@ VTP Domain Name                 : MSI
 VTP Pruning Mode                : Disabled
 VTP Traps Generation            : Disabled
 Device ID                       : aabb.cc00.0300
-Configuration last modified by 192.168.10.252 at 12-1-20 10:58:06
+Configuration last modified by 192.168.10.252 at 12-2-20 10:04:10
 Local updater ID is 192.168.10.252 on interface Vl10 (lowest numbered VLAN interface found)
 
 Feature VLAN:
 --------------
 VTP Operating Mode                : Server
 Maximum VLANs supported locally   : 1005
-Number of existing VLANs          : 11
-Configuration Revision            : 6
-MD5 digest                        : 0xF2 0x02 0xD8 0x95 0xB7 0xEC 0x77 0x7C 
-                                    0x7D 0x88 0xB3 0x88 0x60 0x9E 0x21 0x4F
+Number of existing VLANs          : 16
+Configuration Revision            : 11
+MD5 digest                        : 0xC0 0xAB 0xDE 0x9E 0x9F 0x8A 0xAD 0x82 
+                                    0xD2 0x9D 0x23 0x9A 0xD7 0xFB 0x67 0x0A
 # END ANSIBLE MANAGED BLOCK vtp
