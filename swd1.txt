@@ -12,7 +12,10 @@ VLAN Name                             Status    Ports
 103  VLAN0103                         active    
 104  VLAN0104                         active    
 105  VLAN0105                         active    
-200  Interco-FW                       active    
+200  Firewall-Interco                 active    
+201  VLAN0201                         active    
+250  Autre Interco                    active    
+321  Users-Wifi                       active    
 1002 fddi-default                     act/unsup 
 1003 token-ring-default               act/unsup 
 1004 fddinet-default                  act/unsup 
@@ -32,6 +35,9 @@ VLAN Type  SAID       MTU   Parent RingNo BridgeNo Stp  BrdgMode Trans1 Trans2
 104  enet  100104     1500  -      -      -        -    -        0      0   
 105  enet  100105     1500  -      -      -        -    -        0      0   
 200  enet  100200     1500  -      -      -        -    -        0      0   
+201  enet  100201     1500  -      -      -        -    -        0      0   
+250  enet  100250     1500  -      -      -        -    -        0      0   
+321  enet  100321     1500  -      -      -        -    -        0      0   
 1002 fddi  101002     1500  -      -      -        -    -        0      0   
 1003 tr    101003     1500  -      -      -        -    -        0      0   
 1004 fdnet 101004     1500  -      -      -        ieee -        0      0   
@@ -47,15 +53,203 @@ VTP Domain Name                 : MSI
 VTP Pruning Mode                : Disabled
 VTP Traps Generation            : Disabled
 Device ID                       : aabb.cc00.0300
-Configuration last modified by 192.168.10.252 at 12-2-20 10:04:10
+Configuration last modified by 192.168.10.252 at 12-2-20 10:41:13
 Local updater ID is 192.168.10.252 on interface Vl10 (lowest numbered VLAN interface found)
 
 Feature VLAN:
 --------------
 VTP Operating Mode                : Server
 Maximum VLANs supported locally   : 1005
-Number of existing VLANs          : 16
-Configuration Revision            : 11
-MD5 digest                        : 0xC0 0xAB 0xDE 0x9E 0x9F 0x8A 0xAD 0x82 
-                                    0xD2 0x9D 0x23 0x9A 0xD7 0xFB 0x67 0x0A
+Number of existing VLANs          : 19
+Configuration Revision            : 16
+MD5 digest                        : 0xDA 0x91 0x78 0xCA 0xD3 0xB1 0xD5 0xCA 
+                                    0x25 0x76 0x88 0x3A 0x09 0x94 0x52 0x21
 # END ANSIBLE MANAGED BLOCK vtp
+# BEGIN ANSIBLE MANAGED BLOCK run
+Building configuration...
+
+Current configuration : 3162 bytes
+!
+! Last configuration change at 10:41:13 UTC Wed Dec 2 2020 by craig
+!
+version 15.2
+service timestamps debug datetime msec
+service timestamps log datetime msec
+no service password-encryption
+service compress-config
+!
+hostname SWD1
+!
+boot-start-marker
+boot-end-marker
+!
+!
+logging discriminator EXCESS severity drops 6 msg-body drops EXCESSCOLL 
+logging buffered 50000
+logging console discriminator EXCESS
+!
+username craig privilege 15 secret 5 $1$j9yF$0uIpOs7VdqZ1v94pHWlOH/
+no aaa new-model
+!
+!
+!
+!
+!
+no ip icmp rate-limit unreachable
+!
+!
+!
+no ip domain-lookup
+ip domain-name msi.local
+ip cef
+no ipv6 cef
+!
+!
+!
+spanning-tree mode pvst
+spanning-tree extend system-id
+spanning-tree vlan 10 priority 24576
+!
+vlan internal allocation policy ascending
+!
+ip tcp synwait-time 5
+! 
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+!
+interface Loopback0
+ description InBand Mgmt Interface 
+ ip address 10.1.1.1 255.255.255.255
+!
+interface Ethernet0/0
+ description une nouvelle interface
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+!
+interface Ethernet0/1
+ description to SWA2
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+!
+interface Ethernet0/2
+ description to SWD2
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+!
+interface Ethernet0/3
+ description to Firewall 1
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+!
+interface Ethernet1/0
+ description to C1
+ no switchport
+ ip address 169.254.11.1 255.255.255.254
+ duplex auto
+!
+interface Ethernet1/1
+ description to C2
+ no switchport
+ ip address 169.254.21.1 255.255.255.254
+ duplex auto
+!
+interface Ethernet1/2
+!
+interface Ethernet1/3
+!
+interface Ethernet2/0
+ description OOB Mgmt Interface
+ no switchport
+ ip address 192.168.1.211 255.255.255.0
+ duplex auto
+!
+interface Ethernet2/1
+!
+interface Ethernet2/2
+!
+interface Ethernet2/3
+!
+interface Ethernet3/0
+!
+interface Ethernet3/1
+!
+interface Ethernet3/2
+!
+interface Ethernet3/3
+!
+interface Vlan1
+ no ip address
+ shutdown
+!
+interface Vlan10
+ description GATEWAY USER
+ ip address 192.168.10.252 255.255.255.0
+ ip helper-address 192.168.40.1
+ standby 10 ip 192.168.10.254
+ standby 10 priority 110
+!
+interface Vlan20
+ description GATEWAY PRINTERS
+ ip address 192.168.20.252 255.255.255.0
+ ip helper-address 192.168.40.1
+ vrrp 20 ip 192.168.20.254
+ vrrp 20 priority 150
+!
+interface Vlan40
+ description GATEWAY SERVERS
+ ip address 192.168.40.252 255.255.255.0
+ glbp 40 ip 192.168.40.254
+ glbp 40 priority 90
+!
+interface Vlan100
+ description Interco Distribution Pod 1
+ ip address 10.0.1.1 255.255.255.0
+!
+interface Vlan200
+ description Interco Firewall
+ ip address 10.0.200.2 255.255.255.0
+!
+router ospf 1
+ router-id 10.1.1.1
+ network 10.0.0.0 0.255.255.255 area 0.0.0.0
+ network 169.254.0.0 0.0.255.255 area 0.0.0.0
+ network 192.168.0.0 0.0.255.255 area 0.0.0.0
+!
+ip forward-protocol nd
+!
+no ip http server
+no ip http secure-server
+!
+ip route 10.1.2.1 255.255.255.255 10.0.1.11
+ip route 10.1.2.2 255.255.255.255 10.0.1.12
+!
+!
+!
+!
+!
+control-plane
+!
+!
+line con 0
+ exec-timeout 0 0
+ privilege level 15
+ logging synchronous
+line aux 0
+ exec-timeout 0 0
+ privilege level 15
+ logging synchronous
+line vty 0 4
+ login local
+ transport input ssh
+!
+!
+end
+# END ANSIBLE MANAGED BLOCK run
